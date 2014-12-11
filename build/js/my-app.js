@@ -22,6 +22,7 @@ var SelectPage = function (options) {
     // this.initTable();
 
 }
+
 SelectPage.prototype._onTouch = function(e){
     var self = this;
     this.$overlay = this.$overlay||$('<div class="kuang"></div>').appendTo(this.$page);
@@ -31,19 +32,11 @@ SelectPage.prototype._onTouch = function(e){
         var endy =Math.floor(e.targetTouches[0].clientY);
         var startx =self.startx;
         var starty =self.starty;
-        var divwidth = endx-startx;
-        var divheight = endy-starty;
-        if(divwidth < 0) {
-            startx = endx + divwidth;
-            divwidth = -1 * divwidth;
-        }
-        if(divheight < 0) {
-            starty = endy + divheight;
-            divheight = -1 * divheight;
-        }
+        var divwidth = Math.abs(endx-startx);
+        var divheight = Math.abs(endy-starty);
         this.$overlay.css({
-            left: startx,
-            top: starty,
+            left: Math.min(startx, endx),
+            top: Math.min(starty, endy),
             width:divwidth,
             height:divheight 
         })
@@ -54,13 +47,13 @@ SelectPage.prototype._onTouch = function(e){
             var thiswidth = $this.width();
             var thisheight = $this.height();
             if(!self.selected) {
-                if((thisx<endx&&thisx+thiswidth>=startx)&&(thisy<=endy&&thisy+thisheight>starty)&&(!$this.is(".disable"))){
+                if((thisx<Math.max(startx, endx)&&thisx+thiswidth>=Math.min(startx, endx))&&(thisy<=Math.max(starty, endy)&&thisy+thisheight>Math.min(starty, endy))&&(!$this.is(".disable"))){
                     $this.addClass("selected");
                 } else {
                     $this.removeClass("selected");
                 }
             } else {
-                if((thisx<endx&&thisx+thiswidth>=startx)&&(thisy<=endy&&thisy+thisheight>starty)&&(!$this.is(".disable"))){
+                if((thisx<Math.max(startx, endx)&&thisx+thiswidth>=Math.min(startx, endx))&&(thisy<=Math.max(starty, endy)&&thisy+thisheight>Math.min(starty, endy))&&(!$this.is(".disable"))){
                     $this.hasClass("selected") ? $this.addClass("no-selected") : $this.addClass("selected2");
                 }else{
                     $(this).removeClass("selected2");
