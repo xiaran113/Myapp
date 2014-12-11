@@ -1,0 +1,108 @@
+
+.page-content{
+	overflow-x:hidden;
+}
+.content-block-inner {
+	box-sizing: border-box;
+	margin:0px;
+}
+
+.page-index .kuang{
+	position: absolute;
+	border: 1px solid #28a3ef;
+	background: #B2DAF4;
+	opacity: 0.3;
+}
+/*.content-block-inner table{
+	width: 100%;
+}*/
+.content-block-inner .table{
+	width: 100%;
+	position: relative;
+}
+.content-block-inner td{
+  background: #fff;
+  text-align: center;
+  color: #000;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+td.selected, td.selected2 {
+	background: #aaaaaa;
+}
+td.disable{
+	color: #ddd;  
+}
+td.selected.no-selected {
+	background: none;
+}
+#serialize li{
+	list-style: none;
+	border: 1px solid #ddd;
+}
+.content-block-title .lable{
+	float: left;  
+	line-height: 45px;
+}
+.content-block-title .select{
+	float: left;
+}
+.list-block .swipeout-actions-right a.delete{
+	background: red;
+}
+.list-block .swipeout input{
+	display: none;
+	color: #ddd;
+}
+.list-block .swipeout.editing input{
+	display: block;
+}
+.list-block .swipeout.editing .swipeout-content{
+	display: none;
+}
+.list-block .item-content{
+	padding-left: 0px;
+}
+.list-block li{
+	padding-left: 15px;
+}
+.page .content-block{
+	margin: 0px;
+}
+.toolbar-inner .selected{
+	background: #ddd;
+	padding: 5px;
+	border-radius: 5px;
+}
+img.charts{
+	width: 100%;
+} 
+.table{
+	position:relative;
+}
+.table .td{
+	position: absolute;
+	text-align: center;
+	border: 1px solid #ddd;
+}
+.content-block-inner .td{
+  background: #fff;
+  text-align: center;
+  color: #000;
+  border: 1px solid #ddd;
+}
+.td.selected, .td.selected2 {
+	background: #aaaaaa;
+}
+.td.disable{
+	color: #ddd;
+}
+.td.selected.no-selected {
+	background: none;
+}
+.jiathis_style{
+	display: none;
+}
+.facebook{
+	display: none;
+}

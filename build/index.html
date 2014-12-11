@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="css/framework7.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/my-app.css">
+  </head>
+  <body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+      <div class="content-block">
+        <p>Left panel content goes here</p>
+      </div>
+    </div>
+    <!-- Right panel with cover effect-->
+    <div class="panel panel-right panel-cover">
+      <div class="content-block">
+        <p>Right panel content goes here</p>
+      </div>
+    </div>
+    <!-- Views-->
+    <div class="views">
+      <!-- Your main view, should have "view-main" class-->
+      <div class="view view-main">
+        <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+        <div class="navbar">
+            <div class="navbar-inner" data-page="index">
+                <div class="center">My Table</div>
+                <div class="right sliding">
+                    <a href="#list" class="link">preview</a>
+                </div>
+            </div>
+            <div class="navbar-inner cached" data-page="list">
+                <div class="left sliding">
+                    <a href="#" class="link back">continue</a>
+                </div>
+                <div class="center">Center</div>
+                <div class="right ">
+                    <a href="#charts" id="" class="link ">charts</a>
+                </div>
+            </div>
+            <div class="navbar-inner cached" data-page="charts">
+                <div class="left sliding">
+                    <a href="#" class="link back">back</a>
+                </div>
+                <div class="center">charts</div>
+                <div class="right ">
+                    <a href="#" id="shareimg" class="link shareTo">share</a>
+                </div>
+            </div>
+        </div>
+        <div class="pages navbar-through toolbar-through">
+          <!-- Page, data-page contains page name-->
+          <div data-page="index" class="page page-index">
+
+            <!-- Scrollable page content-->
+            <div class="page-content" >
+              <div class="content-block" id="tablelist">
+                <div class="content-block-inner table">
+                </div>
+              </div>
+            </div>
+            <div class="toolbar">
+              <div class="toolbar-inner">
+                <a href="#" class="link prompt-ok" name="confirm">confirm</a>
+                <a href="#" class="startSelect">select</a>
+                <a href="#" class="link" name="clearselect">clear</a>
+              </div>
+            </div>
+          </div>
+          <div class="page cached page-list" data-page="list">
+            <div class="page-content">
+              <div id="serialize" class="list-block">
+                
+              </div>
+              <div class="list-block">
+                <ul>
+                  <li class="selectx">
+                    <a href="#" class="item-link smart-select" data-back-onselect="true">
+                      <!-- "multiple" attribute for multiple select-->
+                      <select name="x-axis" class="xaxis" >
+                       
+                      </select>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">x-axis</div>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li class="selecty">
+                    <a href="#" class="item-link smart-select" data-back-onselect="true">
+                      <!-- "multiple" attribute for multiple select-->
+                      <select name="y-axis" class="yaxis" >
+                      </select>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title">y-axis</div>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>  
+              <p><a href="#charts" id="generate" class="button">Confirm and generate the chart</a></p>      
+              
+            </div>
+          </div>
+          <div class="page cached page-charts" data-page="charts">
+            <div class="page-content">
+               <div id="main" style="height:400px;width:100%"></div>
+               <!-- JiaThis Button BEGIN -->
+              <script type="text/javascript">
+                var jiathis_config = {
+                    shareImg:{
+                        "showType":"ALL",
+                        "bgColor":"",
+                        "txtColor":"",
+                        "text":"",
+                        "services":"",
+                        "position":"",
+                        "imgwidth":"",
+                        "imgheight":"",
+                        "divname":""
+                    }
+                }
+              </script>
+              <div class="jiathis_style" >
+                <span class="jiathis_txt">分享到：</span>
+                <a class="jiathis_button_icons_1"></a>
+                <a class="jiathis_button_icons_2"></a>
+                <a class="jiathis_button_icons_3"></a>
+                <a class="jiathis_button_icons_4"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+                <a class="jiathis_counter_style"></a>
+              </div>
+              <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1407300833034613" charset="utf-8"></script>
+              <a class="facebook external" href="http://www.facebook.com/sharer.php?u=<?php the_permalink();?>&t=<?php the_title(); ?>">Facebook</a>
+              <!-- JiaThis Button END -->
+            </div>
+            <div class="toolbar">
+              <div class="toolbar-inner">
+                <a href="#" class="link line" name="line">line</a>
+                <a href="#" class="bar" name="bar">bar</a>
+                <a href="#index" class="link table" name="table">table</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Toolbar-->
+        
+        
+      </div>
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="http://g.tbcdn.cn/sj/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.ba-throttle-debounce.min.js"></script>
+    <script type="text/javascript" src="./js/echarts/echarts-all.js"></script>
+    <script type="text/javascript" src="js/my-app.js"></script>
+   
+  </body>
+</html>
