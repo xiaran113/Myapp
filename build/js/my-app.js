@@ -31,19 +31,11 @@ SelectPage.prototype._onTouch = function(e){
         var endy =Math.floor(e.targetTouches[0].clientY);
         var startx =self.startx;
         var starty =self.starty;
-        var divwidth = endx-startx;
-        var divheight = endy-starty;
-        if(divwidth < 0) {
-            startx = endx + divwidth;
-            divwidth = -1 * divwidth;
-        }
-        if(divheight < 0) {
-            starty = endy + divheight;
-            divheight = -1 * divheight;
-        }
+        var divwidth = Math.abs(endx-startx);
+        var divheight = Math.abs(endy-starty);
         this.$overlay.css({
-            left: startx,
-            top: starty,
+            left: Math.min(startx, endx),
+            top: Math.min(starty, endy),
             width:divwidth,
             height:divheight 
         })
@@ -54,13 +46,13 @@ SelectPage.prototype._onTouch = function(e){
             var thiswidth = $this.width();
             var thisheight = $this.height();
             if(!self.selected) {
-                if((thisx<endx&&thisx+thiswidth>=startx)&&(thisy<=endy&&thisy+thisheight>starty)&&(!$this.is(".disable"))){
+                if((thisx<Math.max(startx, endx)&&thisx+thiswidth>=Math.min(startx, endx))&&(thisy<=Math.max(starty, endy)&&thisy+thisheight>Math.min(starty, endy))&&(!$this.is(".disable"))){
                     $this.addClass("selected");
                 } else {
                     $this.removeClass("selected");
                 }
             } else {
-                if((thisx<endx&&thisx+thiswidth>=startx)&&(thisy<=endy&&thisy+thisheight>starty)&&(!$this.is(".disable"))){
+                if((thisx<Math.max(startx, endx)&&thisx+thiswidth>=Math.min(startx, endx))&&(thisy<=Math.max(starty, endy)&&thisy+thisheight>Math.min(starty, endy))&&(!$this.is(".disable"))){
                     $this.hasClass("selected") ? $this.addClass("no-selected") : $this.addClass("selected2");
                 }else{
                     $(this).removeClass("selected2");
@@ -91,6 +83,46 @@ SelectPage.prototype.initTable = function(){
             self.$page.find(".table").append('<div class="td" style="left:'+this.box[0]+'px;top:'+this.box[1]+'px;width:'+tdwidth+'px;height:'+tdheight+'px;line-height:'+tdheight+'px;">'+this.value+'</div>');
         })
     },this))    
+}
+SelectPage.prototype.addlist = function(val){
+    var self = this;
+    var value = val;
+    if(value){
+        var str = '<div class="list-block"><ul>';
+        var unitsArray = [];
+        $.each(self.$page.find(".td.selected"),function(){
+            var tdvalue = $(this).text();
+            var index = tdvalue.search(/\D/g);
+            if(index<0){
+                num = tdvalue;
+                units = "";
+            }else{
+                 num = tdvalue.slice(0, index);
+                 units = tdvalue.slice(index);
+            }
+            if(unitsArray.indexOf(units)>-1||units==""){
+                console.log("0");
+            }else{
+                unitsArray.push(units);
+            }
+            str += '<li class="swipeout"><div class="swipeout-content item-content">'+tdvalue.match(/\d+/g)[0]+'</div><input type="text" value="'+tdvalue.match(/\d+/g)[0]+'" class=""><div class="swipeout-actions-right"><a href="#" class=" swipeout-delete delete">删除</a></div></li>';
+        })
+        str+='</ul></div>';
+        if(unitsArray.length>0){
+            var selecthtml='<select name="" class="">';
+            for(i=0;i<unitsArray.length;i++){
+                selecthtml+='<option value ="'+unitsArray[i]+'">'+unitsArray[i]+'</option>'
+                
+            }
+            selecthtml+='</select>';
+            str ='<div class="content-block-title"><div class="lable '+value+'">'+value+'&nbsp;&nbsp;单位：</div><div class="select">'+selecthtml+'</div></div>'+str;
+        }else{
+            str ='<div class="content-block-title"><div class="lable '+value+'">'+value+'</div> </div>'+str;
+        }
+        self.$page.find(".selected").removeClass("selected").addClass('disable');
+        self.$page.find(".kuang").removeClass("kuang");
+        listGenerate.initList(value,str);
+    } 
 }
 SelectPage.prototype.operate = function(){
     var self = this;
@@ -124,45 +156,7 @@ SelectPage.prototype.operate = function(){
         startselect=false;
         $(this).siblings().removeClass('selected');
         myApp.prompt('请输入该属性名',[''], function (value) {
-            myApp.alert('该属性名是 "' + value + '",确定后点击右上角预览可看到列表',[''],function(){
-                if(value){
-                    var str = '<div class="list-block"><ul>';
-                    var unitsArray = [];
-                    $.each(self.$page.find(".td.selected"),function(){
-                        var tdvalue = $(this).text();
-                        var index = tdvalue.search(/\D/g);
-                        if(index<0){
-                            num = tdvalue;
-                            units = "";
-                        }else{
-                             num = tdvalue.slice(0, index);
-                             units = tdvalue.slice(index);
-                        }
-                        if(unitsArray.indexOf(units)>-1||units==""){
-                            console.log("0");
-                        }else{
-                            unitsArray.push(units);
-                        }
-                        str += '<li class="swipeout"><div class="swipeout-content item-content">'+tdvalue.match(/\d+/g)[0]+'</div><input type="text" value="'+tdvalue.match(/\d+/g)[0]+'" class=""><div class="swipeout-actions-right"><a href="#" class=" swipeout-delete delete">删除</a></div></li>';
-                    })
-                    str+='</ul></div>';
-                    if(unitsArray.length>0){
-                        var selecthtml='<select name="" class="">';
-                        for(i=0;i<unitsArray.length;i++){
-                            selecthtml+='<option value ="'+unitsArray[i]+'">'+unitsArray[i]+'</option>'
-                            
-                        }
-                        selecthtml+='</select>';
-                        str ='<div class="content-block-title"><div class="lable '+value+'">'+value+'&nbsp;&nbsp;单位：</div><div class="select">'+selecthtml+'</div></div>'+str;
-                    }else{
-                        str ='<div class="content-block-title"><div class="lable '+value+'">'+value+'</div> </div>'+str;
-                    }
-                    self.$page.find(".selected").removeClass("selected").addClass('disable');
-                    self.$page.find(".kuang").removeClass("kuang");
-                    listGenerate.initList(value,str);
-                } 
-            });
-            
+            myApp.alert('该属性名是 "' + value + '",确定后点击右上角预览可看到列表',[''],$.proxy(self.addlist(value),this));
         });
     },this));
     //开始选择操作
@@ -262,10 +256,10 @@ ListGenerate.prototype.operate = function(){
         })    
     })
     this.$page.find("#generate").on('click',  $.proxy(function(){
-        var yname = $(".selecty").find('.item-after').text();
-        var xname = $(".selectx").find('.item-after').text();
-        var xarray = $("."+xname).parent('.content-block-title').next('.list-block').find('.item-content');
-        var yarray = $("."+yname).parent('.content-block-title').next('.list-block').find('.item-content');
+        var yname =  this.$page.find(".selecty").find('.item-after').text();
+        var xname =  this.$page.find(".selectx").find('.item-after').text();
+        var xarray =  this.$page.find("."+xname).parent('.content-block-title').next('.list-block').find('.item-content');
+        var yarray =  this.$page.find("."+yname).parent('.content-block-title').next('.list-block').find('.item-content');
         var xdata = [];
         var ydata = [];
         xarray.each(function(){
