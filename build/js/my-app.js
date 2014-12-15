@@ -125,7 +125,7 @@ SelectPage.prototype.addlist = function(val){
     } 
 }
 SelectPage.prototype.operate = function(){
-    var self = this;
+    var self = this; 
     //滑动选择操作
      this.page.find(".content-block-inner").on(myApp.touchEvents.start, $.proxy(function(e) {
         if(this.startselect){
@@ -333,14 +333,27 @@ ChartsGenerate.prototype.generateImage = function(){
 //图片获取
 ChartsGenerate.prototype.getUrl = function(str){
     $.ajax({
-        type:'get',
-        url: "../data/imgurl.txt",
-        // data: str,
-        data:'1'
+        type:'post',
+        //url: "../data/imgurl.txt",
+        url: "saveBase64.php",
+        data: {
+            imgBase64: str 
+        }   
+        //data:'1'
     }).success(function(data){
-        $('.page-charts').find('.page-content').append('<img src='+data+' class="charts" >');       
+        $('.page-charts').find('.page-content').append('<img src='+data+' class="charts" >');           
     })   
 }
+// ChartsGenerate.prototype.getUrl = function(str){
+//     $.ajax({
+//         type:'get',
+//         url: "../data/imgurl.txt",
+//         // data: str,
+//         data:'1'
+//     }).success(function(data){
+//         $('.page-charts').find('.page-content').append('<img src='+data+' class="charts" >');       
+//     })   
+// }
 ChartsGenerate.prototype.operate =function(){
     $$('.shareTo').on('click', function () {
         var buttons = [
