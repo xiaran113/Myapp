@@ -22,6 +22,7 @@ var SelectPage = function (options) {
     // this.initTable();
 
 }
+
 SelectPage.prototype._onTouch = function(e){
     var self = this;
     this.$overlay = this.$overlay||$('<div class="kuang"></div>').appendTo(this.$page);
